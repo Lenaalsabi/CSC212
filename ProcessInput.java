@@ -20,5 +20,6 @@ public class ProcessInput {
 
     public static void main(String[] args) {
         List<Process> myProcesses = readProcesses();
+        SRTFScheduler.scheduleSRTF(myProcesses);
     }
 }
