@@ -8,6 +8,7 @@ public class SRTFScheduler {
         int totalWaitingTime = 0, totalTurnaroundTime = 0;
         int idleTime = 0;
 
+        // Process scheduling loop
         while (completed < n) {
             Process shortest = null;
             for (Process p : processes) {
@@ -17,31 +18,33 @@ public class SRTFScheduler {
                 }
             }
 
+           
             if (shortest != null) {
                 if (current != shortest) { 
                     ganttChart.addEntry(shortest.ID, time, time + 1);
                     time += 1;
                 }
                 current = shortest;
-                shortest.remaining--;
-                time++;
-
+                shortest.remaining--;  
+                time++; 
                 if (shortest.remaining == 0) {
                     shortest.finish = time;
-                    shortest.turnaround = shortest.finish - shortest.arrival;
-                    shortest.waiting = shortest.turnaround - shortest.burst;
+                    shortest.turnaround = shortest.finish - shortest.arrival;  
+                    shortest.waiting = shortest.turnaround - shortest.burst;  
                     totalWaitingTime += shortest.waiting;
                     totalTurnaroundTime += shortest.turnaround;
                     completed++;
                 }
             } else {
-                idleTime++;
-                time++;
+                idleTime++;  
+                time++;  
             }
         }
 
+        
         ganttChart.displayChart();
 
+       
         double avgWaitingTime = (double) totalWaitingTime / n;
         double avgTurnaroundTime = (double) totalTurnaroundTime / n;
         double cpuUtilization = ((double) (time - idleTime) / time) * 100;
@@ -52,3 +55,6 @@ public class SRTFScheduler {
         System.out.printf("CPU Utilization: %.2f%%\n", cpuUtilization);
     }
 }
+
+
+          
